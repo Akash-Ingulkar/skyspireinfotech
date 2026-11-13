@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body>
+  <div class="wrapper">
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <header th:replace="~{fragments/layout :: header}"></header>
+
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+          <div class="breadcrumb-title pe-3">Account</div>
+          <div class="ps-3">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><i class="bx bx-home-alt"></i></li>
+                <li class="breadcrumb-item active" aria-current="page">Profile</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+
+        <div class="alert alert-success d-flex align-items-center" th:if="${success}" th:text="${success}"></div>
+        <div class="alert alert-danger d-flex align-items-center" th:if="${passwordError}" th:text="${passwordError}"></div>
+        <div class="alert alert-danger d-flex align-items-center" th:if="${uploadError}" th:text="${uploadError}"></div>
+
+        <div class="row">
+          <div class="col-xl-9 mx-auto">
+
+            <!-- Account -->
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title mb-1">Account</h5>
+                <p class="text-muted mb-0">Signed in as <strong th:text="${username}">admin</strong></p>
+              </div>
+            </div>
+
+            <!-- Change Password -->
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title mb-1">Change Password</h5>
+                <p class="text-muted mb-4">Use at least 8 characters.</p>
+
+                <form th:action="@{/profile/password}" method="post" class="row g-3">
+                  <div class="col-md-4">
+                    <label for="currentPassword" class="form-label">Current Password</label>
+                    <input type="password" id="currentPassword" name="currentPassword" class="form-control" required/>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="newPassword" class="form-label">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword" class="form-control" minlength="8" required/>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" minlength="8" required/>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary px-4">Update Password</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Logo -->
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title mb-1">Site Logo</h5>
+                <p class="text-muted mb-4">PNG, JPG, WebP, or SVG. Used in the admin panel and available for the public site.</p>
+
+                <div class="d-flex align-items-center gap-4 mb-3" th:if="${siteSettings.logoUrl != null and !siteSettings.logoUrl.isEmpty()}">
+                  <img th:src="@{${siteSettings.logoUrl}}" alt="Current logo" style="height:56px; width:auto; border-radius:8px; border:1px solid #e5e9f0; padding:6px;"/>
+                  <span class="text-muted font-13">Current logo</span>
+                </div>
+
+                <form th:action="@{/profile/logo}" method="post" enctype="multipart/form-data" class="row g-3">
+                  <div class="col-md-8">
+                    <input type="file" name="file" class="form-control" accept="image/png,image/jpeg,image/svg+xml,image/webp" required/>
+                  </div>
+                  <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary px-4">Upload Logo</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Favicon -->
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title mb-1">Favicon</h5>
+                <p class="text-muted mb-4">Small square icon shown in the browser tab. PNG or ICO recommended.</p>
+
+                <div class="d-flex align-items-center gap-4 mb-3" th:if="${siteSettings.faviconUrl != null and !siteSettings.faviconUrl.isEmpty()}">
+                  <img th:src="@{${siteSettings.faviconUrl}}" alt="Current favicon" style="height:40px; width:40px; object-fit:contain; border-radius:8px; border:1px solid #e5e9f0; padding:6px;"/>
+                  <span class="text-muted font-13">Current favicon</span>
+                </div>
+
+                <form th:action="@{/profile/favicon}" method="post" enctype="multipart/form-data" class="row g-3">
+                  <div class="col-md-8">
+                    <input type="file" name="file" class="form-control" accept="image/png,image/x-icon,image/vnd.microsoft.icon,image/svg+xml" required/>
+                  </div>
+                  <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary px-4">Upload Favicon</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <p class="mb-0">&copy; 2026 Skyspire InfoTech Admin</p>
+      </footer>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments/layout :: switcher}"></div>
+  <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

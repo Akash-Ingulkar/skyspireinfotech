@@ -1,0 +1,265 @@
+/* ==========================================================================
+   Skyspire InfoTech — "Aurora" theme
+   Deep navy + blue -> violet -> pink gradient, cyan highlights.
+   Loaded after main.css and skyspire.css on every page; remove this one file
+   to go back to the template's plain look.
+   ========================================================================== */
+:root {
+    --sk-navy: #0B0A24;
+    --sk-navy-2: #150E3E;
+    --sk-navy-3: #1d1460;
+    --sk-blue: #2563EB;
+    --sk-violet: #7C3AED;
+    --sk-pink: #EC4899;
+    --sk-cyan: #22D3EE;
+    --sk-grad: linear-gradient(135deg, #2563EB 0%, #7C3AED 55%, #EC4899 100%);
+    --sk-grad-text: linear-gradient(90deg, #2563EB 0%, #7C3AED 50%, #EC4899 100%);
+    --sk-aurora:
+        radial-gradient(50% 70% at 12% 10%, rgba(37, 99, 235, 0.45), transparent 60%),
+        radial-gradient(45% 65% at 88% 20%, rgba(124, 58, 237, 0.42), transparent 60%),
+        radial-gradient(50% 60% at 60% 110%, rgba(236, 72, 153, 0.30), transparent 60%),
+        linear-gradient(160deg, #0B0A24 0%, #150E3E 55%, #0B0A24 100%);
+}
+
+::selection { background: #7C3AED; color: #fff; }
+
+/* ---------- Gradient text helper used below ---------- */
+.banner h1 .fw-semibold,
+h3 .fw-semibold:not(.bg-main-two-600 *):not(.cta *):not(.banner *) {
+    background: var(--sk-grad-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ---------- Buttons ---------- */
+.btn-main {
+    background: var(--sk-grad) !important;
+    background-size: 160% 160% !important;
+    border: 0 !important;
+    box-shadow: 0 14px 30px -12px rgba(124, 58, 237, 0.65);
+    transition: background-position 0.5s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
+}
+.btn-main:hover {
+    background-position: 100% 0 !important;
+    box-shadow: 0 20px 38px -12px rgba(236, 72, 153, 0.7);
+}
+
+/* ---------- Eyebrow pills ---------- */
+span.rounded-pill.bg-main-50.text-main-600,
+span.rounded-pill.bg-white.text-main-600,
+span.rounded-pill.bg-neutral-100 {
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.12), rgba(236, 72, 153, 0.12)) !important;
+    color: #5B21B6 !important;
+    border: 1px solid rgba(124, 58, 237, 0.22);
+}
+span.rounded-pill.bg-main-600.text-white {
+    background: var(--sk-grad) !important;
+    box-shadow: 0 8px 20px -10px rgba(124, 58, 237, 0.8);
+}
+
+/* ---------- Top bar ---------- */
+#smooth-wrapper > .bg-main-600 {
+    background: var(--sk-grad) !important;
+}
+
+/* ---------- Services strip (marquee) — joins the dark hero ---------- */
+div:has(> .container > .top-features-slider) {
+    background: var(--sk-navy) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+    box-shadow: none !important;
+}
+.top-features-slider span { color: rgba(255, 255, 255, 0.85) !important; }
+.top-features-slider img { filter: brightness(0) invert(1); opacity: 0.75; }
+.top-features-slider.left-right-gradient::before,
+.top-features-slider.left-right-gradient::after { display: none !important; }
+
+/* ---------- Hero ---------- */
+.banner {
+    background: var(--sk-aurora) !important;
+    isolation: isolate;
+}
+.banner::before,
+.banner::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+    animation: sk-aurora-drift 16s ease-in-out infinite alternate;
+}
+.banner::before { background: rgba(34, 211, 238, 0.28); top: -140px; left: 30%; }
+.banner::after { background: rgba(236, 72, 153, 0.25); bottom: -200px; right: -80px; animation-delay: -8s; }
+.banner > img[src*="sqaure_shape"] { opacity: 0.06; }
+.banner h1,
+.banner h1 * { color: #fff; }
+.banner h1 .fw-semibold {
+    background: linear-gradient(90deg, #FFFFFF 0%, #A5F3FC 45%, #F0ABFC 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.banner p { color: rgba(255, 255, 255, 0.72) !important; }
+.banner .hero-eyebrow {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #A5F3FC !important;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.banner .btn-main-two {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    backdrop-filter: blur(8px);
+}
+/* animated gradient frame around the hero image/video */
+.hero-media > .position-relative {
+    padding: 3px;
+    border-radius: 35px;
+    background: conic-gradient(from var(--why-angle), #22D3EE, #7C3AED, #EC4899, #2563EB, #22D3EE);
+    animation: why-spin 8s linear infinite;
+    box-shadow: 0 40px 90px -30px rgba(124, 58, 237, 0.7);
+}
+
+/* ---------- Home: About section ---------- */
+.gradient-bg-one {
+    background:
+        radial-gradient(60% 80% at 0% 0%, rgba(37, 99, 235, 0.10), transparent 60%),
+        radial-gradient(60% 80% at 100% 100%, rgba(236, 72, 153, 0.10), transparent 60%),
+        #F7F7FD !important;
+}
+.drag-rotate-element-section .bg-main-600.tw-rounded-3xl { background: var(--sk-grad) !important; }
+.drag-rotate-element-section .bg-main-two-600.tw-rounded-3xl { background: linear-gradient(160deg, #1d1460, #0B0A24) !important; }
+
+/* ---------- Service cards (Home + Services page) ---------- */
+.offer .group-item.tw-rounded-3xl {
+    border: 1px solid rgba(124, 58, 237, 0.12);
+    box-shadow: 0 20px 40px -30px rgba(21, 14, 62, 0.35);
+    transition: transform 0.45s cubic-bezier(.2, .8, .2, 1), box-shadow 0.45s ease !important;
+}
+.offer .group-item.tw-rounded-3xl:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 34px 60px -30px rgba(124, 58, 237, 0.55);
+}
+.offer .bg-pink-dark { background: linear-gradient(150deg, #E0F2FE 0%, #EDE9FE 100%) !important; }
+.offer .bg-pink-lighter { background: linear-gradient(150deg, #FDF2F8 0%, #FFE4E6 100%) !important; }
+.offer .group-item.bg-main-50 { background: linear-gradient(150deg, #EEF2FF 0%, #E0E7FF 100%) !important; }
+.offer .bg-purple-light { background: linear-gradient(150deg, #F5F3FF 0%, #E0F2FE 100%) !important; }
+.offer .group-item a.rounded-circle {
+    background: var(--sk-grad) !important;
+    color: #fff !important;
+    box-shadow: 0 10px 22px -10px rgba(124, 58, 237, 0.8);
+}
+
+/* ---------- Process ("From Idea To Launch") ---------- */
+#roadmap-section {
+    background: var(--sk-aurora) !important;
+    box-shadow: 0 40px 80px -40px rgba(21, 14, 62, 0.7);
+}
+
+/* ---------- Testimonials ---------- */
+.testimonials { background: linear-gradient(180deg, #F7F7FD 0%, #FFFFFF 100%) !important; }
+.testimonial-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(124, 58, 237, 0.10) !important;
+    box-shadow: 0 24px 50px -36px rgba(21, 14, 62, 0.45);
+    transition: transform 0.45s cubic-bezier(.2, .8, .2, 1), box-shadow 0.45s ease;
+}
+.testimonial-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 4px;
+    background: var(--sk-grad);
+}
+.testimonial-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 34px 60px -30px rgba(124, 58, 237, 0.45);
+}
+.testimonial-card .ph-quotes {
+    background: var(--sk-grad-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.testimonial-card__avatar.bg-main-600 { background: linear-gradient(135deg, #2563EB, #22D3EE) !important; }
+.testimonial-card__avatar.bg-main-two-600 { background: linear-gradient(135deg, #4F46E5, #A855F7) !important; }
+.testimonial-card__avatar.bg-pink { background: linear-gradient(135deg, #EC4899, #F97316) !important; }
+
+/* ---------- Call to action ---------- */
+.cta .container > .row {
+    position: relative;
+    margin: 40px 0 0;
+    padding: 0 40px;
+    border-radius: 40px;
+    background: var(--sk-aurora);
+    box-shadow: 0 40px 90px -40px rgba(21, 14, 62, 0.8);
+}
+.cta h3,
+.cta h3 * { color: #fff !important; }
+.cta h3 .fw-semibold {
+    background: linear-gradient(90deg, #FFFFFF, #A5F3FC 50%, #F0ABFC);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+}
+.cta p { color: rgba(255, 255, 255, 0.72) !important; }
+.cta .btn-main-two {
+    background: var(--sk-grad) !important;
+    border-radius: 999px !important;
+    box-shadow: 0 16px 34px -14px rgba(236, 72, 153, 0.8);
+}
+@media (max-width: 767px) {
+    .cta .container > .row { padding: 40px 20px; border-radius: 28px; }
+}
+
+/* ---------- Footer ---------- */
+.footer.bg-black {
+    background:
+        radial-gradient(40% 60% at 10% 0%, rgba(37, 99, 235, 0.30), transparent 60%),
+        radial-gradient(40% 60% at 90% 0%, rgba(236, 72, 153, 0.22), transparent 60%),
+        linear-gradient(180deg, #150E3E 0%, #0B0A24 100%) !important;
+}
+.footer.bg-black::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    background: var(--sk-grad);
+}
+.footer .btn-main { border-radius: 999px !important; }
+
+/* ---------- Inner page title banners ---------- */
+.breadcrumb.section-bg-two {
+    background: var(--sk-aurora) !important;
+    position: relative;
+    overflow: hidden;
+}
+.breadcrumb.section-bg-two h1 { color: #fff !important; }
+.breadcrumb.section-bg-two li,
+.breadcrumb.section-bg-two li a { color: rgba(255, 255, 255, 0.65) !important; }
+.breadcrumb.section-bg-two li.text-main-600 {
+    color: #A5F3FC !important;
+}
+
+@keyframes sk-aurora-drift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-80px, 60px) scale(1.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .banner::before, .banner::after, .hero-media > .position-relative { animation: none !important; }
+}
+
+/* spacing between the CTA panel and the footer */
+.cta { padding-bottom: 90px !important; }
+@media (max-width: 767px) { .cta { padding-bottom: 60px !important; } }
+/* footer contact icons were dark blue on navy */
+.footer img[src*="icons/map"],
+.footer img[src*="icons/phone"] { filter: brightness(0) invert(1); opacity: 0.75; }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link th:if="${siteSettings != null and siteSettings.faviconUrl != null and !siteSettings.faviconUrl.isEmpty()}"
+        rel="icon" th:href="@{${siteSettings.faviconUrl}}" type="image/png"/>
+  <link th:unless="${siteSettings != null and siteSettings.faviconUrl != null and !siteSettings.faviconUrl.isEmpty()}"
+        rel="icon" th:href="@{/assets/images/favicon-32x32.png}" type="image/png"/>
+
+  <link th:href="@{/assets/plugins/simplebar/css/simplebar.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/plugins/metismenu/css/metisMenu.min.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/css/pace.min.css}" rel="stylesheet"/>
+  <script th:src="@{/assets/js/pace.min.js}"></script>
+
+  <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/css/bootstrap-extended.css}" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet"/>
+  <link th:href="@{/assets/css/app.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/css/icons.css}" rel="stylesheet"/>
+  <title>Login | Skyspire InfoTech Admin</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="section-authentication-cover">
+      <div class="row g-0">
+
+        <div class="col-12 col-xl-7 col-xxl-8 auth-cover-left align-items-center justify-content-center d-none d-xl-flex">
+          <div class="card shadow-none bg-transparent shadow-none rounded-0 mb-0">
+            <div class="card-body">
+              <img th:src="@{/assets/images/login-images/login-cover.svg}" class="img-fluid auth-img-cover-login" width="650" alt=""/>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center">
+          <div class="card rounded-0 m-3 shadow-none bg-transparent mb-0">
+            <div class="card-body p-sm-5">
+              <div class="mb-3 text-center">
+                <img th:if="${siteSettings != null and siteSettings.logoUrl != null and !siteSettings.logoUrl.isEmpty()}"
+                     th:src="@{${siteSettings.logoUrl}}" width="60" alt=""/>
+                <img th:unless="${siteSettings != null and siteSettings.logoUrl != null and !siteSettings.logoUrl.isEmpty()}"
+                     th:src="@{/assets/images/logo-icon.png}" width="60" alt=""/>
+              </div>
+              <div class="text-center mb-4">
+                <h5>Skyspire InfoTech Admin</h5>
+                <p class="mb-0">Sign in to manage your website content</p>
+              </div>
+
+              <div class="alert alert-danger py-2" th:if="${param.error}">Invalid username or password.</div>
+              <div class="alert alert-success py-2" th:if="${param.logout}">You&rsquo;ve been logged out.</div>
+
+              <div class="form-body">
+                <form th:action="@{/login}" method="post" class="row g-3">
+                  <div class="col-12">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username"
+                           autocomplete="username" required/>
+                  </div>
+                  <div class="col-12">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group" id="show_hide_password">
+                      <input type="password" class="form-control border-end-0" id="password" name="password"
+                             autocomplete="current-password" required/>
+                      <a href="javascript:;" class="input-group-text bg-transparent"><i class="bx bx-hide"></i></a>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="d-grid">
+                      <button type="submit" class="btn btn-primary">Log in</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/assets/js/jquery.min.js}"></script>
+  <script th:src="@{/assets/plugins/simplebar/js/simplebar.min.js}"></script>
+  <script th:src="@{/assets/plugins/metismenu/js/metisMenu.min.js}"></script>
+  <script th:src="@{/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js}"></script>
+  <script>
+    $(document).ready(function () {
+      $("#show_hide_password a").on('click', function (event) {
+        event.preventDefault();
+        var input = $('#show_hide_password input');
+        var icon = $('#show_hide_password i');
+        if (input.attr("type") === "password") {
+          input.attr('type', 'text');
+          icon.removeClass("bx-hide").addClass("bx-show");
+        } else {
+          input.attr('type', 'password');
+          icon.removeClass("bx-show").addClass("bx-hide");
+        }
+      });
+    });
+  </script>
+  <script th:src="@{/assets/js/app.js}"></script>
+</body>
+</html>

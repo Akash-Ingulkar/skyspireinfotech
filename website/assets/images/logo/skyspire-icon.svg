@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Skyspire InfoTech — Orbit Spire mark (for light backgrounds) -->
+  <circle cx="32" cy="37" r="21" fill="none" stroke="#1351D8" stroke-width="5"/>
+  <path d="M32 3 L40 52 L32 45 L24 52 Z" fill="#150E3E"/>
+  <circle cx="50.5" cy="27" r="4.5" fill="#06B6D4"/>
+</svg>

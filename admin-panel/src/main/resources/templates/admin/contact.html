@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body>
+  <div class="wrapper">
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <header th:replace="~{fragments/layout :: header}"></header>
+
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+          <div class="breadcrumb-title pe-3">Website</div>
+          <div class="ps-3">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><i class="bx bx-home-alt"></i></li>
+                <li class="breadcrumb-item active" aria-current="page">Contact</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+
+        <div class="alert alert-success d-flex align-items-center" th:if="${success}" th:text="${success}"></div>
+
+        <div class="row">
+          <div class="col-xl-9 mx-auto">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title mb-1">Published Contact Details</h5>
+                <p class="text-muted mb-4">Shown in the footer and contact section of skyspireinfotech.com.</p>
+
+                <form th:action="@{/contact}" th:object="${info}" method="post" class="row g-3">
+                  <div class="col-md-6">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" th:field="*{email}"/>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" id="phone" class="form-control" th:field="*{phone}"/>
+                  </div>
+                  <div class="col-12">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea id="address" class="form-control" th:field="*{address}" rows="2"></textarea>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary px-4">Save changes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-xl-9 mx-auto">
+            <h5 class="mb-3">Inquiries</h5>
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover mb-0 align-middle">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Message</th>
+                        <th class="text-end">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="msg : ${messages}">
+                        <td th:text="${#temporals.format(msg.submittedAt, 'dd MMM yyyy, HH:mm')}"></td>
+                        <td th:text="${msg.name}"></td>
+                        <td th:text="${msg.email}"></td>
+                        <td th:text="${msg.phone}"></td>
+                        <td class="text-truncate" style="max-width: 260px;" th:text="${msg.message}"></td>
+                        <td class="text-end">
+                          <form th:action="@{/contact/messages/{id}/delete(id=${msg.id})}" method="post"
+                                onsubmit="return confirm('Delete this message?');">
+                            <button type="submit" class="btn btn-sm btn-icon btn-light text-danger" title="Delete">
+                              <i class="bx bx-trash"></i>
+                            </button>
+                          </form>
+                        </td>
+                      </tr>
+                      <tr th:if="${messages.isEmpty()}">
+                        <td colspan="6" class="text-center text-muted py-4">No inquiries yet.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <p class="mb-0">&copy; 2026 Skyspire InfoTech Admin</p>
+      </footer>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments/layout :: switcher}"></div>
+  <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

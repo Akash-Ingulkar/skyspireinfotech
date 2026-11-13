@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body>
+  <div class="wrapper">
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <header th:replace="~{fragments/layout :: header}"></header>
+
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+          <div class="breadcrumb-title pe-3">Website</div>
+          <div class="ps-3">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><i class="bx bx-home-alt"></i></li>
+                <li class="breadcrumb-item active" aria-current="page">Home</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+
+        <div class="alert alert-success d-flex align-items-center" th:if="${success}" th:text="${success}"></div>
+
+        <div class="row">
+          <div class="col-xl-9 mx-auto">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title mb-1">Hero Section</h5>
+                <p class="text-muted mb-4">Edit the hero content shown at the top of skyspireinfotech.com.</p>
+
+                <form th:action="@{/home}" th:object="${content}" method="post" class="row g-3">
+                  <div class="col-12">
+                    <label for="subheading" class="form-label">Eyebrow text</label>
+                    <input type="text" id="subheading" class="form-control" th:field="*{subheading}"/>
+                  </div>
+                  <div class="col-12">
+                    <label for="heading" class="form-label">Heading</label>
+                    <input type="text" id="heading" class="form-control" th:field="*{heading}"/>
+                  </div>
+                  <div class="col-12">
+                    <label for="bodyText" class="form-label">Subtext</label>
+                    <textarea id="bodyText" class="form-control" th:field="*{bodyText}" rows="4"></textarea>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary px-4">Save changes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- ===== Hero media (image or video in the home page hero card) ===== -->
+            <div class="card" id="hero-media">
+              <div class="card-body">
+                <h5 class="card-title mb-1">Hero Media</h5>
+                <p class="text-muted mb-4">The picture or video in the rounded card on the right of the home page hero.</p>
+
+                <div class="alert alert-danger" th:if="${mediaError}" th:text="${mediaError}"></div>
+
+                <!-- What's live now -->
+                <div class="mb-4">
+                  <div class="fw-semibold mb-2">Showing now:
+                    <span class="badge bg-primary" th:if="${content.mediaType == 'VIDEO'}">Video</span>
+                    <span class="badge bg-primary" th:if="${content.mediaType == 'IMAGE'}">Image</span>
+                    <span class="badge bg-secondary" th:if="${content.mediaType == null}">Website default photo</span>
+                  </div>
+                  <video th:if="${content.mediaType == 'VIDEO' and content.videoUrl != null}" th:src="@{${content.videoUrl}}"
+                         muted loop autoplay playsinline
+                         style="width:100%; max-width:420px; aspect-ratio:4/3; object-fit:cover; border-radius:16px; background:#000;"></video>
+                  <img th:if="${content.mediaType == 'IMAGE' and content.imageUrl != null}" th:src="@{${content.imageUrl}}" alt="Current hero image"
+                       style="width:100%; max-width:420px; aspect-ratio:4/3; object-fit:cover; border-radius:16px;"/>
+                </div>
+
+                <form th:action="@{/home/media}" method="post" enctype="multipart/form-data" class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label d-block">Show in hero</label>
+                    <div class="btn-group" role="group" aria-label="Hero media type">
+                      <input type="radio" class="btn-check" name="mediaType" id="mediaImage" value="IMAGE"
+                             th:checked="${content.mediaType != 'VIDEO'}">
+                      <label class="btn btn-outline-primary px-4" for="mediaImage"><i class="bx bx-image me-1"></i>Image</label>
+                      <input type="radio" class="btn-check" name="mediaType" id="mediaVideo" value="VIDEO"
+                             th:checked="${content.mediaType == 'VIDEO'}">
+                      <label class="btn btn-outline-primary px-4" for="mediaVideo"><i class="bx bx-video me-1"></i>Video</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 media-field" data-type="IMAGE">
+                    <label for="imageFile" class="form-label">Upload image</label>
+                    <input type="file" id="imageFile" name="imageFile" class="form-control" accept="image/jpeg,image/png,image/webp"/>
+                    <div class="form-text">
+                      JPG, PNG or WebP, max 8 MB. Best size: <strong>1200 × 900 px</strong> (4:3, landscape).
+                      <span th:if="${content.imageUrl != null and content.imageUrl.startsWith('/uploads/')}">Leave empty to keep the current image.</span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 media-field" data-type="VIDEO">
+                    <label for="videoFile" class="form-label">Upload video</label>
+                    <input type="file" id="videoFile" name="videoFile" class="form-control" accept="video/mp4,video/webm"/>
+                    <div class="form-text">
+                      MP4 (H.264) or WebM, max 50 MB. Best size: <strong>1280 × 960 or 1440 × 1080 px</strong> (4:3, landscape),
+                      10–20 seconds. It plays muted and on loop, so sound isn't needed. Smaller files load faster for visitors (aim for under 15 MB).
+                      <span th:if="${content.videoUrl != null}">Leave empty to keep the current video.</span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 d-flex gap-2 flex-wrap">
+                    <button type="submit" class="btn btn-primary px-4" id="mediaSubmit">Save hero media</button>
+                  </div>
+                </form>
+
+                <form th:action="@{/home/media/reset}" method="post" class="mt-3" th:if="${content.mediaType != null}">
+                  <button type="submit" class="btn btn-outline-secondary btn-sm">Use website default photo instead</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <p class="mb-0">&copy; 2026 Skyspire InfoTech Admin</p>
+      </footer>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments/layout :: switcher}"></div>
+  <div th:replace="~{fragments/layout :: scripts}"></div>
+  <script>
+    // Show only the upload box for the chosen media type; show progress text while a big video uploads.
+    (function () {
+      var radios = document.querySelectorAll('input[name="mediaType"]');
+      function sync() {
+        var type = document.querySelector('input[name="mediaType"]:checked').value;
+        document.querySelectorAll('.media-field').forEach(function (el) {
+          el.style.display = el.getAttribute('data-type') === type ? '' : 'none';
+        });
+      }
+      radios.forEach(function (r) { r.addEventListener('change', sync); });
+      sync();
+      var form = document.getElementById('mediaSubmit').form;
+      form.addEventListener('submit', function () {
+        var btn = document.getElementById('mediaSubmit');
+        btn.disabled = true;
+        btn.textContent = 'Uploading… please wait';
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body>
+  <div class="wrapper">
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <header th:replace="~{fragments/layout :: header}"></header>
+
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+          <div class="breadcrumb-title pe-3">Website</div>
+          <div class="ps-3">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a th:href="@{/services}">Services</a></li>
+                <li class="breadcrumb-item active" aria-current="page"
+                    th:text="${service.id != null} ? 'Edit' : 'Add'"></li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-9 mx-auto">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title mb-4" th:text="${service.id != null} ? 'Edit Service' : 'Add Service'"></h5>
+
+                <form th:action="${service.id != null} ? @{/services/{id}(id=${service.id})} : @{/services}"
+                      th:object="${service}" method="post" class="row g-3">
+
+                  <div class="col-12">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" id="title" class="form-control" th:field="*{title}" required/>
+                  </div>
+                  <div class="col-12">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea id="description" class="form-control" th:field="*{description}" rows="4" required></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="iconName" class="form-label">Icon key</label>
+                    <input type="text" id="iconName" class="form-control" th:field="*{iconName}"
+                           placeholder="web / consulting / software / marketing"/>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="displayOrder" class="form-label">Display order</label>
+                    <input type="number" id="displayOrder" class="form-control" th:field="*{displayOrder}" min="1"/>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="active" th:field="*{active}"/>
+                      <label class="form-check-label" for="active">Visible on site</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary px-4">Save</button>
+                    <a th:href="@{/services}" class="btn btn-light px-4">Cancel</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <p class="mb-0">&copy; 2026 Skyspire InfoTech Admin</p>
+      </footer>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments/layout :: switcher}"></div>
+  <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

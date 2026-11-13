@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}"></head>
+<body>
+  <div class="wrapper">
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <header th:replace="~{fragments/layout :: header}"></header>
+
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+          <div class="breadcrumb-title pe-3">Website</div>
+          <div class="ps-3">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><i class="bx bx-home-alt"></i></li>
+                <li class="breadcrumb-item active" aria-current="page">About</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+
+        <div class="alert alert-success d-flex align-items-center" th:if="${success}" th:text="${success}"></div>
+
+        <div class="row">
+          <div class="col-xl-9 mx-auto">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title mb-1">About Section</h5>
+                <p class="text-muted mb-4">Edit the "why choose us" section shown on skyspireinfotech.com.</p>
+
+                <form th:action="@{/about}" th:object="${content}" method="post" class="row g-3">
+                  <div class="col-12">
+                    <label for="subheading" class="form-label">Eyebrow text</label>
+                    <input type="text" id="subheading" class="form-control" th:field="*{subheading}"/>
+                  </div>
+                  <div class="col-12">
+                    <label for="heading" class="form-label">Heading</label>
+                    <input type="text" id="heading" class="form-control" th:field="*{heading}"/>
+                  </div>
+                  <div class="col-12">
+                    <label for="bodyText" class="form-label">Description</label>
+                    <textarea id="bodyText" class="form-control" th:field="*{bodyText}" rows="6"></textarea>
+                  </div>
+
+                  <div class="col-12 mt-4">
+                    <h6 class="mb-1">Numbers</h6>
+                    <p class="text-muted small mb-0">Shown on the Home page About section and the About page. Write them as you want them displayed, e.g. <code>120+</code>.</p>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="statProjects" class="form-label">Projects delivered</label>
+                    <input type="text" id="statProjects" class="form-control" th:field="*{statProjects}" placeholder="120+" maxlength="20"/>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="statClients" class="form-label">Happy clients</label>
+                    <input type="text" id="statClients" class="form-control" th:field="*{statClients}" placeholder="60+" maxlength="20"/>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="statYears" class="form-label">Years of experience</label>
+                    <input type="text" id="statYears" class="form-control" th:field="*{statYears}" placeholder="8+" maxlength="20"/>
+                  </div>
+
+                  <div class="col-12 mt-4">
+                    <h6 class="mb-1">Why choose us: 3 points</h6>
+                    <p class="text-muted small mb-0">The three points listed under the About text on the Home page, and the three cards on the About page.</p>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="feature1Title" class="form-label">Point 1 title</label>
+                    <input type="text" id="feature1Title" class="form-control mb-2" th:field="*{feature1Title}" placeholder="Senior-Led Teams"/>
+                    <textarea id="feature1Text" class="form-control" th:field="*{feature1Text}" rows="3" maxlength="600" placeholder="Short description"></textarea>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="feature2Title" class="form-label">Point 2 title</label>
+                    <input type="text" id="feature2Title" class="form-control mb-2" th:field="*{feature2Title}" placeholder="Transparent Process"/>
+                    <textarea id="feature2Text" class="form-control" th:field="*{feature2Text}" rows="3" maxlength="600" placeholder="Short description"></textarea>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="feature3Title" class="form-label">Point 3 title</label>
+                    <input type="text" id="feature3Title" class="form-control mb-2" th:field="*{feature3Title}" placeholder="Support That Continues"/>
+                    <textarea id="feature3Text" class="form-control" th:field="*{feature3Text}" rows="3" maxlength="600" placeholder="Short description"></textarea>
+                  </div>
+
+                  <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-primary px-4">Save changes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- ===== About image ===== -->
+            <div class="card" id="about-image-card">
+              <div class="card-body">
+                <h5 class="card-title mb-1">About Image</h5>
+                <p class="text-muted mb-4">Used on the About page ("Our story") and in the photo tile of the Home page About section.</p>
+
+                <div class="alert alert-danger" th:if="${mediaError}" th:text="${mediaError}"></div>
+
+                <div class="mb-3" th:if="${content.imageUrl != null and !content.imageUrl.isEmpty()}">
+                  <img th:src="@{${content.imageUrl}}" alt="Current About image"
+                       style="width:100%; max-width:360px; aspect-ratio:4/3; object-fit:cover; border-radius:16px;"/>
+                </div>
+                <p class="text-muted" th:if="${content.imageUrl == null or content.imageUrl.isEmpty()}">No image uploaded. The website shows its default photos.</p>
+
+                <form th:action="@{/about/image}" method="post" enctype="multipart/form-data" class="row g-3">
+                  <div class="col-12">
+                    <label for="imageFile" class="form-label">Upload image</label>
+                    <input type="file" id="imageFile" name="imageFile" class="form-control" accept="image/jpeg,image/png,image/webp" required/>
+                    <div class="form-text">JPG, PNG or WebP, max 8 MB. Best size: <strong>1200 × 900 px</strong> (landscape). People or your office work best.</div>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary px-4">Upload image</button>
+                  </div>
+                </form>
+                <form th:action="@{/about/image/remove}" method="post" class="mt-3"
+                      th:if="${content.imageUrl != null and !content.imageUrl.isEmpty()}">
+                  <button type="submit" class="btn btn-outline-secondary btn-sm">Remove image (use website defaults)</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <p class="mb-0">&copy; 2026 Skyspire InfoTech Admin</p>
+      </footer>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments/layout :: switcher}"></div>
+  <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <th:block th:fragment="head">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link th:if="${siteSettings != null and siteSettings.faviconUrl != null and !siteSettings.faviconUrl.isEmpty()}"
+          rel="icon" th:href="@{${siteSettings.faviconUrl}}" type="image/png"/>
+    <link th:unless="${siteSettings != null and siteSettings.faviconUrl != null and !siteSettings.faviconUrl.isEmpty()}"
+          rel="icon" th:href="@{/assets/images/favicon-32x32.png}" type="image/png"/>
+
+    <link th:href="@{/assets/plugins/simplebar/css/simplebar.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/plugins/metismenu/css/metisMenu.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/pace.min.css}" rel="stylesheet"/>
+    <script th:src="@{/assets/js/pace.min.js}"></script>
+
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/bootstrap-extended.css}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet"/>
+    <link th:href="@{/assets/css/app.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/icons.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/dark-theme.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/semi-dark.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/header-colors.css}" rel="stylesheet"/>
+
+    <title th:text="${title} + ' | Skyspire InfoTech Admin'">Skyspire InfoTech Admin</title>
+  </th:block>
+</head>
+<body>
+  <div th:fragment="sidebar" class="sidebar-wrapper" data-simplebar="true">
+    <div class="sidebar-header">
+      <div>
+        <img th:if="${siteSettings != null and siteSettings.logoUrl != null and !siteSettings.logoUrl.isEmpty()}"
+             th:src="@{${siteSettings.logoUrl}}" class="logo-icon" alt="logo"/>
+        <img th:unless="${siteSettings != null and siteSettings.logoUrl != null and !siteSettings.logoUrl.isEmpty()}"
+             th:src="@{/assets/images/logo-icon.png}" class="logo-icon" alt="logo icon"/>
+      </div>
+      <div>
+        <h4 class="logo-text">Skyspire</h4>
+      </div>
+      <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i></div>
+    </div>
+
+    <ul class="metismenu" id="menu">
+      <li th:classappend="${active == 'dashboard'} ? 'mm-active'">
+        <a th:href="@{/dashboard}">
+          <div class="parent-icon"><i class='bx bx-tachometer'></i></div>
+          <div class="menu-title">Dashboard</div>
+        </a>
+      </li>
+      <li th:classappend="${active == 'home'} ? 'mm-active'">
+        <a th:href="@{/home}">
+          <div class="parent-icon"><i class='bx bx-home-alt'></i></div>
+          <div class="menu-title">Home</div>
+        </a>
+      </li>
+      <li th:classappend="${active == 'about'} ? 'mm-active'">
+        <a th:href="@{/about}">
+          <div class="parent-icon"><i class='bx bx-info-circle'></i></div>
+          <div class="menu-title">About</div>
+        </a>
+      </li>
+      <li th:classappend="${active == 'services'} ? 'mm-active'">
+        <a th:href="@{/services}">
+          <div class="parent-icon"><i class='bx bx-grid-alt'></i></div>
+          <div class="menu-title">Services</div>
+        </a>
+      </li>
+      <li th:classappend="${active == 'contact'} ? 'mm-active'">
+        <a th:href="@{/contact}">
+          <div class="parent-icon"><i class='bx bx-envelope'></i></div>
+          <div class="menu-title">Contact</div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <header th:fragment="header">
+    <div class="topbar d-flex align-items-center">
+      <nav class="navbar navbar-expand gap-3">
+        <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
+
+        <div class="top-menu ms-auto">
+          <ul class="navbar-nav align-items-center gap-1">
+            <li class="nav-item dark-mode d-none d-sm-flex">
+              <a class="nav-link dark-mode-icon" href="javascript:;"><i class='bx bx-moon'></i></a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="user-box dropdown px-3">
+          <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#"
+             role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img th:src="@{/assets/images/avatars/avatar-2.png}" class="user-img" alt="user avatar"/>
+            <div class="user-info">
+              <p class="user-name mb-0" sec:authentication="name">admin</p>
+              <p class="designattion mb-0">Administrator</p>
+            </div>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a th:href="@{/profile}" class="dropdown-item d-flex align-items-center gap-2">
+                <i class="bx bx-user-circle fs-5"></i><span>Profile</span>
+              </a>
+            </li>
+            <li>
+              <div class="dropdown-divider"></div>
+            </li>
+            <li>
+              <form th:action="@{/logout}" method="post" class="m-0">
+                <button type="submit" class="dropdown-item d-flex align-items-center gap-2">
+                  <i class="bx bx-log-out-circle fs-5"></i><span>Logout</span>
+                </button>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div th:fragment="switcher">
+    <div class="switcher-wrapper">
+      <div class="switcher-btn"><i class='bx bx-cog bx-spin'></i></div>
+      <div class="switcher-body">
+        <div class="d-flex align-items-center">
+          <h5 class="mb-0 text-uppercase">Theme Customizer</h5>
+          <button type="button" class="btn-close ms-auto close-switcher" aria-label="Close"></button>
+        </div>
+        <hr/>
+        <h6 class="mb-0">Theme Styles</h6>
+        <hr/>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="lightmode" checked/>
+            <label class="form-check-label" for="lightmode">Light</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="darkmode"/>
+            <label class="form-check-label" for="darkmode">Dark</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="semidark"/>
+            <label class="form-check-label" for="semidark">Semi Dark</label>
+          </div>
+        </div>
+        <hr/>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" id="minimaltheme" name="flexRadioDefault"/>
+          <label class="form-check-label" for="minimaltheme">Minimal Theme</label>
+        </div>
+        <hr/>
+        <h6 class="mb-0">Header Colors</h6>
+        <hr/>
+        <div class="header-colors-indigators">
+          <div class="row row-cols-auto g-3">
+            <div class="col" th:each="n : ${#numbers.sequence(1, 8)}">
+              <div th:class="'indigator headercolor' + ${n}" th:id="'headercolor' + ${n}"></div>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <h6 class="mb-0">Sidebar Colors</h6>
+        <hr/>
+        <div class="header-colors-indigators">
+          <div class="row row-cols-auto g-3">
+            <div class="col" th:each="n : ${#numbers.sequence(1, 8)}">
+              <div th:class="'indigator sidebarcolor' + ${n}" th:id="'sidebarcolor' + ${n}"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="overlay toggle-icon"></div>
+  </div>
+
+  <div th:fragment="scripts">
+    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/plugins/simplebar/js/simplebar.min.js}"></script>
+    <script th:src="@{/assets/plugins/metismenu/js/metisMenu.min.js}"></script>
+    <script th:src="@{/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js}"></script>
+    <script th:src="@{/assets/js/app.js}"></script>
+  </div>
+</body>
+</html>

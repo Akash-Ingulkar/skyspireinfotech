@@ -1,0 +1,32 @@
+# Only the live Skyspire InfoTech project is tracked. Everything else in this
+# folder (downloaded template mirrors, old backups, build outputs, archives)
+# stays local.
+/*
+!/.gitignore
+!/README.md
+!/package.json
+!/package-lock.json
+!/scripts/
+!/website/
+!/branding/
+!/admin-panel/
+
+# Admin panel: build output and files uploaded through the admin UI
+/admin-panel/target/
+/admin-panel/uploads/
+
+# Branding work files
+/branding/_export.html
+
+# General
+node_modules/
+*.log
+*.tar.gz
+*.zip
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+!/.gitattributes

@@ -1,0 +1,69 @@
+/* Skyspire InfoTech brand overrides for the Setech template */
+
+.site-title {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 700;
+	font-size: 24px;
+	color: #16204a;
+	line-height: 1;
+}
+
+.site-title span {
+	color: #0154f7;
+}
+
+.sticky-header .site-title,
+.mobile-sticky-header .site-title {
+	color: #16204a;
+}
+
+.footer-title {
+	font-size: 26px;
+	color: #ffffff;
+}
+
+.footer-title span {
+	color: #4d8dff;
+}
+
+.footer-tagline {
+	color: #b7bdd6;
+	margin-top: 12px;
+	max-width: 280px;
+}
+
+.footer-column .widget-content .list li {
+	word-break: break-word;
+}
+
+.contact-info-block .icon {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 80px;
+	width: 80px;
+	border-radius: 50%;
+	background: #0154f7;
+	color: #ffffff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 26px;
+}
+
+.feature-block-three .icon img {
+	display: inline-block;
+}
+
+/* The transparent absolute-positioned header overlaps the page-title
+   banner's default padding on inner pages; add clearance for its
+   actual height (header-top bar + main nav row). */
+.page-title {
+	padding-top: 150px;
+}
+
+@media (max-width: 767px) {
+	.page-title {
+		padding-top: 120px;
+	}
+}
