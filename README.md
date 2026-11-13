@@ -47,5 +47,5 @@ The server keeps its database credentials and initial admin password in `/etc/sk
 
 ## Notes
 
-- The site is built on a licensed Envato template (SassTech). Keep this repository **private**.
+- The website design is based on the SassTech template (Envato) and the admin panel on the Rocker admin template (Codervent). Those template files remain under their authors' licenses and are not covered by this repository.
 - `website/assets/images/hero-workspace.jpg` is an Unsplash photo by Jakub Żerdzicki (Unsplash License).
